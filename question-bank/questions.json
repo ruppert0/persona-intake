@@ -1,0 +1,70 @@
+{
+  "version": "0.1.0",
+  "questions": [
+    {
+      "id": "role",
+      "prompt": "What role should the agent primarily play?",
+      "type": "single",
+      "choices": [
+        {
+          "id": "assistant",
+          "label": "Assistant (helpful, responsive)"
+        },
+        {
+          "id": "operator",
+          "label": "Operator (does tasks end-to-end)"
+        },
+        {
+          "id": "researcher",
+          "label": "Researcher (deep dives, citations)"
+        },
+        {
+          "id": "social",
+          "label": "Social agent (community + comms)"
+        }
+      ]
+    },
+    {
+      "id": "autonomy_level",
+      "prompt": "How autonomous should the agent be by default?",
+      "type": "single",
+      "choices": [
+        {
+          "id": "A",
+          "label": "A \u2014 autonomous but safe (ask before risky actions)"
+        },
+        {
+          "id": "B",
+          "label": "B \u2014 autonomous publishing (constrained)"
+        },
+        {
+          "id": "C",
+          "label": "C \u2014 full operator (high trust)"
+        }
+      ]
+    },
+    {
+      "id": "tone",
+      "prompt": "Pick the tone/vibe.",
+      "type": "single",
+      "choices": [
+        {
+          "id": "sharp",
+          "label": "Sharp, efficient, no fluff"
+        },
+        {
+          "id": "warm",
+          "label": "Warm, patient, explanatory"
+        },
+        {
+          "id": "playful",
+          "label": "Playful, witty"
+        },
+        {
+          "id": "formal",
+          "label": "Formal, professional"
+        }
+      ]
+    }
+  ]
+}
