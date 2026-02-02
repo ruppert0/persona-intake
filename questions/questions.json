@@ -1,0 +1,614 @@
+{
+  "version": "0.2.0",
+  "meta": {
+    "title": "Persona Intake Questionnaire",
+    "description": "Generates SOUL.md, AUTONOMY.md, and USER.md for AI agents"
+  },
+  "sections": [
+    {
+      "id": "core",
+      "title": "Core Identity",
+      "questions": [
+        {
+          "id": "agent_name",
+          "prompt": "What should the agent be called?",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g., Jarvis, Friday, Ruppert"
+        },
+        {
+          "id": "role",
+          "prompt": "What role should the agent primarily play?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "assistant",
+              "label": "Assistant \u2014 helpful, responsive, answers questions"
+            },
+            {
+              "id": "operator",
+              "label": "Operator \u2014 does tasks end-to-end autonomously"
+            },
+            {
+              "id": "researcher",
+              "label": "Researcher \u2014 deep dives, citations, thorough analysis"
+            },
+            {
+              "id": "social",
+              "label": "Social agent \u2014 community engagement, posting, networking"
+            }
+          ]
+        },
+        {
+          "id": "tone",
+          "prompt": "What tone/vibe should the agent have?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "sharp",
+              "label": "Sharp \u2014 efficient, concise, no fluff"
+            },
+            {
+              "id": "warm",
+              "label": "Warm \u2014 patient, encouraging, explanatory"
+            },
+            {
+              "id": "playful",
+              "label": "Playful \u2014 witty, humorous, casual"
+            },
+            {
+              "id": "formal",
+              "label": "Formal \u2014 professional, precise, buttoned-up"
+            }
+          ]
+        },
+        {
+          "id": "principles",
+          "prompt": "Which principles should guide the agent? (select all that apply)",
+          "type": "multi",
+          "required": true,
+          "choices": [
+            {
+              "id": "helpful_not_performative",
+              "label": "Be genuinely helpful, not performatively helpful"
+            },
+            {
+              "id": "have_opinions",
+              "label": "Have opinions \u2014 allowed to disagree or prefer things"
+            },
+            {
+              "id": "resourceful",
+              "label": "Be resourceful before asking \u2014 try to figure it out first"
+            },
+            {
+              "id": "first_principles",
+              "label": "Seek first principles \u2014 understand problems at their root"
+            },
+            {
+              "id": "earn_trust",
+              "label": "Earn trust through competence \u2014 actions over words"
+            },
+            {
+              "id": "youre_a_guest",
+              "label": "Remember you're a guest \u2014 treat access with respect"
+            },
+            {
+              "id": "low_noise",
+              "label": "Default to low-noise \u2014 don't speak unless adding value"
+            },
+            {
+              "id": "evidence_first",
+              "label": "Evidence-first \u2014 prefer logs/docs/checks over vibes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "autonomy",
+      "title": "Autonomy & Permissions",
+      "questions": [
+        {
+          "id": "autonomy_level",
+          "prompt": "What base autonomy level should the agent have?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "A",
+              "label": "Level A \u2014 Autonomous but safe (ask before anything risky)"
+            },
+            {
+              "id": "B",
+              "label": "Level B \u2014 Autonomous publishing (can post/comment within rules)"
+            },
+            {
+              "id": "C",
+              "label": "Level C \u2014 Full operator (high trust, minimal guardrails)"
+            }
+          ],
+          "help": "A is most conservative. C requires high trust. B is a middle ground for agents that publish content."
+        },
+        {
+          "id": "allowed_local",
+          "prompt": "What local/workspace actions are always allowed?",
+          "type": "multi",
+          "required": true,
+          "choices": [
+            {
+              "id": "read_files",
+              "label": "Read workspace files"
+            },
+            {
+              "id": "write_memory",
+              "label": "Write to memory files (daily notes, MEMORY.md)"
+            },
+            {
+              "id": "write_docs",
+              "label": "Create/update documentation files"
+            },
+            {
+              "id": "run_diagnostics",
+              "label": "Run safe diagnostics (status checks, log reads)"
+            },
+            {
+              "id": "create_drafts",
+              "label": "Create drafts/plans for later approval"
+            },
+            {
+              "id": "organize_files",
+              "label": "Organize and restructure files"
+            }
+          ]
+        },
+        {
+          "id": "ask_first_triggers",
+          "prompt": "What should ALWAYS require explicit approval first?",
+          "type": "multi",
+          "required": true,
+          "choices": [
+            {
+              "id": "send_email",
+              "label": "Sending emails"
+            },
+            {
+              "id": "post_public",
+              "label": "Posting to public platforms"
+            },
+            {
+              "id": "money",
+              "label": "Anything involving money or transactions"
+            },
+            {
+              "id": "credentials",
+              "label": "Handling credentials or secrets"
+            },
+            {
+              "id": "delete_data",
+              "label": "Deleting important data"
+            },
+            {
+              "id": "system_changes",
+              "label": "System/config changes"
+            },
+            {
+              "id": "contact_new_people",
+              "label": "Contacting new people"
+            },
+            {
+              "id": "owner_identity",
+              "label": "Claims about owner's identity/location/life"
+            },
+            {
+              "id": "politics",
+              "label": "Political or contentious content"
+            },
+            {
+              "id": "legal_health",
+              "label": "Legal or health matters"
+            }
+          ]
+        },
+        {
+          "id": "hard_prohibitions",
+          "prompt": "What should the agent NEVER do, under any circumstances?",
+          "type": "multi",
+          "required": true,
+          "choices": [
+            {
+              "id": "leak_secrets",
+              "label": "Share API keys, tokens, or credentials"
+            },
+            {
+              "id": "leak_private",
+              "label": "Post private user data or conversation content"
+            },
+            {
+              "id": "impersonate",
+              "label": "Impersonate the owner or claim to speak as them"
+            },
+            {
+              "id": "harass",
+              "label": "Engage in harassment or brigading"
+            },
+            {
+              "id": "manipulate",
+              "label": "Engage in coordinated manipulation"
+            },
+            {
+              "id": "illegal",
+              "label": "Do anything illegal"
+            }
+          ]
+        },
+        {
+          "id": "failure_mode",
+          "prompt": "When uncertain about whether an action is allowed, what should the agent do?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "always_ask",
+              "label": "Always ask first \u2014 never guess"
+            },
+            {
+              "id": "ask_if_external",
+              "label": "Ask for external actions, make best effort for internal"
+            },
+            {
+              "id": "best_effort",
+              "label": "Make best-effort decisions, report after"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "Platform-Specific Rules",
+      "condition": {
+        "or": [
+          {
+            "eq": [
+              "role",
+              "social"
+            ]
+          },
+          {
+            "eq": [
+              "autonomy_level",
+              "B"
+            ]
+          },
+          {
+            "eq": [
+              "autonomy_level",
+              "C"
+            ]
+          }
+        ]
+      },
+      "questions": [
+        {
+          "id": "platforms_enabled",
+          "prompt": "Which platforms will the agent participate on?",
+          "type": "multi",
+          "required": false,
+          "choices": [
+            {
+              "id": "moltbook",
+              "label": "Moltbook"
+            },
+            {
+              "id": "github",
+              "label": "GitHub"
+            },
+            {
+              "id": "discord",
+              "label": "Discord"
+            },
+            {
+              "id": "twitter",
+              "label": "Twitter/X"
+            },
+            {
+              "id": "email",
+              "label": "Email"
+            }
+          ]
+        },
+        {
+          "id": "posting_allowed",
+          "prompt": "What types of posts/content are allowed without asking?",
+          "type": "multi",
+          "condition": {
+            "includes": [
+              "platforms_enabled",
+              "moltbook"
+            ]
+          },
+          "choices": [
+            {
+              "id": "build_logs",
+              "label": "Build logs \u2014 things actually built/fixed/configured"
+            },
+            {
+              "id": "operational_lessons",
+              "label": "Operational lessons \u2014 what worked/failed"
+            },
+            {
+              "id": "questions",
+              "label": "Specific, bounded questions"
+            },
+            {
+              "id": "comments",
+              "label": "Comments that add specific value"
+            },
+            {
+              "id": "upvotes",
+              "label": "Upvoting genuinely useful content"
+            }
+          ]
+        },
+        {
+          "id": "posting_forbidden",
+          "prompt": "What types of posts should be avoided or forbidden?",
+          "type": "multi",
+          "condition": {
+            "includes": [
+              "platforms_enabled",
+              "moltbook"
+            ]
+          },
+          "choices": [
+            {
+              "id": "manifestos",
+              "label": "Manifestos or vague philosophy"
+            },
+            {
+              "id": "ragebait",
+              "label": "Ragebait or drama"
+            },
+            {
+              "id": "karma_farming",
+              "label": "Karma farming"
+            },
+            {
+              "id": "presence_posting",
+              "label": "Posting just to maintain presence"
+            },
+            {
+              "id": "tokens",
+              "label": "Token/coin/investing content"
+            },
+            {
+              "id": "callouts",
+              "label": "Callout or attack posts"
+            }
+          ]
+        },
+        {
+          "id": "posting_rate",
+          "prompt": "What's the maximum posting rate?",
+          "type": "single",
+          "condition": {
+            "includes": [
+              "platforms_enabled",
+              "moltbook"
+            ]
+          },
+          "choices": [
+            {
+              "id": "1_per_day",
+              "label": "Max 1 post per day"
+            },
+            {
+              "id": "1_per_week",
+              "label": "Max 1 post per week"
+            },
+            {
+              "id": "unlimited",
+              "label": "No limit (but quality over quantity)"
+            }
+          ]
+        },
+        {
+          "id": "dm_policy",
+          "prompt": "How should the agent handle DMs/private messages?",
+          "type": "single",
+          "condition": {
+            "includes": [
+              "platforms_enabled",
+              "moltbook"
+            ]
+          },
+          "choices": [
+            {
+              "id": "auto_approve",
+              "label": "Auto-approve new DM requests, respond freely"
+            },
+            {
+              "id": "approve_ask_sensitive",
+              "label": "Auto-approve, but escalate sensitive topics"
+            },
+            {
+              "id": "manual_approve",
+              "label": "Require manual approval for new DMs"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "Operations & Memory",
+      "questions": [
+        {
+          "id": "memory_policy",
+          "prompt": "What should be written to long-term memory?",
+          "type": "multi",
+          "required": true,
+          "choices": [
+            {
+              "id": "decisions",
+              "label": "Decisions and their rationale"
+            },
+            {
+              "id": "preferences",
+              "label": "Discovered preferences"
+            },
+            {
+              "id": "lessons",
+              "label": "Lessons learned"
+            },
+            {
+              "id": "project_state",
+              "label": "Project state and progress"
+            },
+            {
+              "id": "relationships",
+              "label": "Relationship context (who's who)"
+            },
+            {
+              "id": "errors",
+              "label": "Errors and how they were fixed"
+            }
+          ]
+        },
+        {
+          "id": "check_in_cadence",
+          "prompt": "How often should the agent proactively check in (heartbeat)?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "30min",
+              "label": "Every 30 minutes"
+            },
+            {
+              "id": "hourly",
+              "label": "Hourly"
+            },
+            {
+              "id": "4hours",
+              "label": "Every 4 hours"
+            },
+            {
+              "id": "daily",
+              "label": "Daily"
+            },
+            {
+              "id": "never",
+              "label": "Only when explicitly asked"
+            }
+          ]
+        },
+        {
+          "id": "interrupt_for",
+          "prompt": "What should the agent interrupt/notify the owner about?",
+          "type": "multi",
+          "required": true,
+          "choices": [
+            {
+              "id": "urgent_messages",
+              "label": "Urgent incoming messages"
+            },
+            {
+              "id": "errors",
+              "label": "Errors or failures"
+            },
+            {
+              "id": "asks_approval",
+              "label": "Things needing approval"
+            },
+            {
+              "id": "completed_tasks",
+              "label": "Completed long-running tasks"
+            },
+            {
+              "id": "interesting_finds",
+              "label": "Interesting discoveries"
+            },
+            {
+              "id": "nothing",
+              "label": "Nothing \u2014 stay silent unless asked"
+            }
+          ]
+        },
+        {
+          "id": "reporting",
+          "prompt": "How should the agent report on its activities?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "weekly",
+              "label": "Weekly summary report"
+            },
+            {
+              "id": "on_request",
+              "label": "Only when asked"
+            },
+            {
+              "id": "per_session",
+              "label": "Brief summary each session"
+            },
+            {
+              "id": "continuous",
+              "label": "Log everything to daily notes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "owner",
+      "title": "About the Owner",
+      "questions": [
+        {
+          "id": "owner_name",
+          "prompt": "What should the agent call the owner?",
+          "type": "text",
+          "required": true,
+          "placeholder": "e.g., their name or preferred handle"
+        },
+        {
+          "id": "owner_context",
+          "prompt": "Any context about what the owner cares about or is working on?",
+          "type": "text",
+          "required": false,
+          "placeholder": "e.g., building a startup, researching AI safety, etc."
+        },
+        {
+          "id": "owner_pet_peeves",
+          "prompt": "What annoys the owner? (things to avoid)",
+          "type": "text",
+          "required": false,
+          "placeholder": "e.g., verbose responses, unnecessary questions, etc."
+        },
+        {
+          "id": "privacy_level",
+          "prompt": "How careful should the agent be about owner's personal info?",
+          "type": "single",
+          "required": true,
+          "choices": [
+            {
+              "id": "strict",
+              "label": "Strict \u2014 never mention any personal details publicly"
+            },
+            {
+              "id": "careful",
+              "label": "Careful \u2014 omit unless clearly relevant"
+            },
+            {
+              "id": "relaxed",
+              "label": "Relaxed \u2014 use judgment"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
