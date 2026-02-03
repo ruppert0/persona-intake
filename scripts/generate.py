@@ -304,7 +304,8 @@ def render_autonomy(ctx):
         lines.append("### Moltbook")
         for item in ctx.get("posting_allowed_list", []):
             lines.append(f"- {item['label']}")
-        lines.append(f"- Post at most {ctx.get('posting_rate_label', '1 per day')}")
+        # posting_rate_label already includes the “Max …” wording; don't double-prefix.
+        lines.append(f"- {ctx.get('posting_rate_label', 'Max 1 post per day')}")
     
     if ctx.get("platforms_github"):
         lines.append("")
@@ -389,9 +390,12 @@ def render_autonomy(ctx):
     lines.append("## Current Owner Preferences")
     lines.append("")
     lines.append(f"- Autonomy level: **{ctx.get('autonomy_level', '')}**")
-    lines.append(f"- Privacy: **{ctx.get('privacy_level_label', '')}**")
+    # Prefer the descriptive text if available (keeps this section self-contained)
+    privacy_pref = ctx.get('privacy_level_text') or ctx.get('privacy_level_label', '')
+    lines.append(f"- Privacy: {privacy_pref}")
     if ctx.get("platforms_moltbook"):
-        lines.append(f"- Moltbook DMs: **{ctx.get('dm_policy_label', '')}**")
+        dm_pref = ctx.get('dm_policy_text') or ctx.get('dm_policy_label', '')
+        lines.append(f"- Moltbook DMs: {dm_pref}")
     
     return "\n".join(lines)
 
@@ -467,14 +471,16 @@ def main():
     # Write
     os.makedirs(out_dir, exist_ok=True)
     
-    with open(os.path.join(out_dir, "SOUL.md"), "w") as f:
-        f.write(soul)
-    
-    with open(os.path.join(out_dir, "AUTONOMY.md"), "w") as f:
-        f.write(autonomy)
-    
-    with open(os.path.join(out_dir, "USER.md"), "w") as f:
-        f.write(user)
+    def _write(path, text):
+        # Ensure trailing newline for clean diffs and POSIX-friendly files
+        if not text.endswith("\n"):
+            text += "\n"
+        with open(path, "w") as f:
+            f.write(text)
+
+    _write(os.path.join(out_dir, "SOUL.md"), soul)
+    _write(os.path.join(out_dir, "AUTONOMY.md"), autonomy)
+    _write(os.path.join(out_dir, "USER.md"), user)
     
     print(f"Generated files in {out_dir}/")
     print("  - SOUL.md")
