@@ -1,0 +1,25 @@
+name: verify-examples
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate example outputs
+        run: |
+          python scripts/generate.py examples/social-operator/answers.json --out /tmp/persona-intake-generated
+
+      - name: Verify committed example output is in sync
+        run: |
+          diff -ru examples/social-operator/output /tmp/persona-intake-generated
